@@ -3,6 +3,13 @@ import PageTitle from '../components/PageTitle.jsx';
 import Flash from '../components/Flash.jsx';
 import { useEvents } from '../context/EventsContext.jsx';
 
+function formatDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const pad = (number) => String(number).padStart(2, '0');
+  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 export default function EventDetailPage() {
   const { id } = useParams();
   const { getEvent } = useEvents();
@@ -28,7 +35,7 @@ export default function EventDetailPage() {
       <Flash />
       <PageTitle>{event.title}</PageTitle>
       <div className="card">
-        <div className="card__band">Fecha: {event.date}</div>
+        <div className="card__band">Fecha: {formatDate(event.date)}</div>
         <div className="card__body">
           <ul className="meta">
             <li>
@@ -40,7 +47,7 @@ export default function EventDetailPage() {
               <span className="meta__value">{event.capacity}</span>
             </li>
           </ul>
-          <p className="meta__value">{event.description}</p>
+          {event.description && <p className="meta__value">{event.description}</p>}
         </div>
       </div>
     </>
