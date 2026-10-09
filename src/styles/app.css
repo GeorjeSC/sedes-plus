@@ -509,17 +509,24 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
+  cursor: pointer;
 }
 
 .attendance input {
   width: 24px;
   height: 24px;
   accent-color: var(--success);
+  cursor: pointer;
 }
 
 .attendance__status {
   color: var(--success);
   font-weight: 700;
+}
+
+.attendance__pending {
+  color: var(--muted);
 }
 
 @media (max-width: 575px) {

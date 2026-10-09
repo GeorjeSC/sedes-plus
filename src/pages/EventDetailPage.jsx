@@ -3,9 +3,10 @@ import PageTitle from '../components/PageTitle.jsx';
 import Flash from '../components/Flash.jsx';
 import CapacityBar from '../components/CapacityBar.jsx';
 import EnrollButton from '../components/EnrollButton.jsx';
+import RegistrationTable from '../components/RegistrationTable.jsx';
 import { useEvents } from '../context/EventsContext.jsx';
 import { useSession } from '../context/SessionContext.jsx';
-import { isFull, spotsLeft } from '../lib/events.js';
+import { attendedCount, isFull, spotsLeft } from '../lib/events.js';
 
 function formatDate(value) {
   const date = new Date(value);
@@ -74,6 +75,28 @@ export default function EventDetailPage() {
       <PageTitle>{event.title}</PageTitle>
       <div className={`event-detail${role === 'organizer' ? '' : ' event-detail--single'}`}>
         {info}
+        {role === 'organizer' && (
+          <div className="card">
+            <div className="card__band">Inscritos</div>
+            <div className="card__body">
+              <ul className="meta">
+                <li>
+                  <span className="meta__label">Inscritos: </span>
+                  <span className="meta__value">{registered}</span>
+                </li>
+                <li>
+                  <span className="meta__label">Asistentes: </span>
+                  <span className="meta__value">{attendedCount(event)}</span>
+                </li>
+                <li>
+                  <span className="meta__label">Cupos libres: </span>
+                  <span className="meta__value">{left}</span>
+                </li>
+              </ul>
+              <RegistrationTable event={event} />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
