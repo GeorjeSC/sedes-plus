@@ -54,6 +54,25 @@ La barra amarilla de arriba (**Modo demo**) simula la sesión del intranet:
 
 La primera vez, la aplicación carga dos eventos de ejemplo (uno casi lleno) y ocho estudiantes ficticios. La barra de demo recuerda el rol y el estudiante al recargar la página. Para probar el diseño en celular, reduce el ancho de la ventana a 360, 768 y 1280 px o usa el modo dispositivo de las herramientas del navegador.
 
+## Publicar en GitHub
+
+```bash
+git remote add origin https://github.com/<USUARIO>/<REPOSITORIO>.git
+git push -u origin main
+```
+
+Si el repositorio aún no existe, créalo vacío en <https://github.com/new> (sin README ni .gitignore, para no chocar con los del proyecto).
+
+## Desplegar en Vercel
+
+1. Entra a <https://vercel.com/new> e importa el repositorio de GitHub.
+2. Vercel detecta Vite automáticamente. Confirma: **Build Command** `npm run build`, **Output Directory** `dist`.
+3. Pulsa **Deploy**. Cada `git push` a `main` publica una nueva versión.
+
+El archivo `vercel.json` ya incluye el rewrite de SPA, necesario porque las rutas (`/events/:id`) se manejan con React Router en el navegador: sin él, recargar una ruta profunda daría 404. No se necesitan variables de entorno.
+
+También se puede desplegar desde la terminal con [`vercel`](https://vercel.com/docs/cli): `npm install -g vercel`, `vercel` (preview) y `vercel --prod` (producción).
+
 ## Limitaciones
 
 - Los datos se guardan en el navegador donde se usa la aplicación: no se comparten entre dispositivos ni entre navegadores.
@@ -69,6 +88,8 @@ src/context/      SessionContext (rol y estudiante) y EventsContext (eventos)
 src/lib/          events.js (reglas de negocio) y storage.js (localStorage)
 src/data/         students.js (8 estudiantes ficticios) y seed.js (2 eventos de ejemplo)
 src/styles/       theme.css (colores, tipografía y formas) y app.css
+vercel.json       configuración de despliegue (rewrite de SPA)
+.nvmrc            versión de Node (22)
 .opencode/skills/ instrucciones para agentes de IA (alcance, estructura y estilo)
 ```
 

@@ -56,11 +56,11 @@ export function addRegistration(event, student) {
   if (!student || !student.code) {
     return { ok: false, error: 'No hay un estudiante en la sesión' };
   }
-  if (isFull(event)) {
-    return { ok: false, error: 'Este evento ya no tiene cupos disponibles' };
-  }
   if (isRegistered(event, student.code)) {
     return { ok: false, error: 'Ya estás inscrito en este evento' };
+  }
+  if (isFull(event)) {
+    return { ok: false, error: 'Este evento ya no tiene cupos disponibles' };
   }
 
   const registration = {
