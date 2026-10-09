@@ -1,0 +1,82 @@
+const seedEvents = [
+  {
+    id: 'demo-charla-innovacion',
+    title: 'Charla de innovación tecnológica',
+    description: 'Conversatorio sobre tendencias tecnológicas para estudiantes.',
+    date: '2026-11-12T18:00',
+    location: 'Auditorio Central',
+    capacity: 30,
+    createdAt: '2026-10-01T09:00:00.000Z',
+    registrations: [
+      {
+        id: 'demo-reg-1',
+        studentCode: '20211234',
+        name: 'Ana Torres Quispe',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-03T10:00:00.000Z',
+      },
+      {
+        id: 'demo-reg-2',
+        studentCode: '20214567',
+        name: 'Luis Ramírez Soto',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-03T11:00:00.000Z',
+      },
+      {
+        id: 'demo-reg-3',
+        studentCode: '20217890',
+        name: 'María Fernández Rojas',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-03T12:00:00.000Z',
+      },
+    ],
+  },
+  {
+    id: 'demo-taller-liderazgo',
+    title: 'Taller de liderazgo estudiantil',
+    description: 'Taller práctico de habilidades de liderazgo y trabajo en equipo.',
+    date: '2026-11-20T10:00',
+    location: 'Aula 203 - Pabellón B',
+    capacity: 5,
+    createdAt: '2026-10-02T09:00:00.000Z',
+    registrations: [
+      {
+        id: 'demo-reg-4',
+        studentCode: '20211234',
+        name: 'Ana Torres Quispe',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-04T10:00:00.000Z',
+      },
+      {
+        id: 'demo-reg-5',
+        studentCode: '20214567',
+        name: 'Luis Ramírez Soto',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-04T10:30:00.000Z',
+      },
+      {
+        id: 'demo-reg-6',
+        studentCode: '20217890',
+        name: 'María Fernández Rojas',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-04T11:00:00.000Z',
+      },
+      {
+        id: 'demo-reg-7',
+        studentCode: '20211122',
+        name: 'Diego Herrera Luna',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-04T11:30:00.000Z',
+      },
+    ],
+  },
+];
+
+export default seedEvents;
