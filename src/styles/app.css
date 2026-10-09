@@ -98,6 +98,7 @@
 
 .header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -492,12 +493,14 @@
   font-weight: 700;
   text-transform: uppercase;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .reg-table td {
   padding: 12px 8px;
   border: 1px solid var(--border);
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .reg-table__empty {

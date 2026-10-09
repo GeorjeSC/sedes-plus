@@ -48,11 +48,11 @@ Abre <http://localhost:5173> en el navegador. Para generar la versión de produc
 La barra amarilla de arriba (**Modo demo**) simula la sesión del intranet:
 
 1. Elige el rol **Organizador**, pulsa **Nuevo evento**, completa título, fecha, lugar y cupo, y guarda.
-2. Cambia al rol **Estudiante**, elige un estudiante de ejemplo y abre el evento.
+2. Cambia al rol **Estudiante**, elige uno de los 8 estudiantes de ejemplo y abre el evento.
 3. Pulsa **Inscribirme**. Cuando el cupo se llena, el sistema no permite más inscripciones.
 4. Vuelve al rol **Organizador**, abre el evento y marca la asistencia de cada persona en la lista de inscritos.
 
-La primera vez, la aplicación carga dos eventos de ejemplo. Para probar el diseño en celular, reduce el ancho de la ventana o usa el modo dispositivo de las herramientas del navegador.
+La primera vez, la aplicación carga dos eventos de ejemplo (uno casi lleno) y ocho estudiantes ficticios. La barra de demo recuerda el rol y el estudiante al recargar la página. Para probar el diseño en celular, reduce el ancho de la ventana a 360, 768 y 1280 px o usa el modo dispositivo de las herramientas del navegador.
 
 ## Limitaciones
 
@@ -67,7 +67,7 @@ src/pages/        EventsListPage, NewEventPage, EventDetailPage
 src/components/   Header, DemoBar, EventCard, CapacityBar, EnrollButton, RegistrationTable, Flash
 src/context/      SessionContext (rol y estudiante) y EventsContext (eventos)
 src/lib/          events.js (reglas de negocio) y storage.js (localStorage)
-src/data/         students.js y seed.js: datos ficticios de ejemplo
+src/data/         students.js (8 estudiantes ficticios) y seed.js (2 eventos de ejemplo)
 src/styles/       theme.css (colores, tipografía y formas) y app.css
 .opencode/skills/ instrucciones para agentes de IA (alcance, estructura y estilo)
 ```
