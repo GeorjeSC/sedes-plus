@@ -1,7 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import PageTitle from '../components/PageTitle.jsx';
 import Flash from '../components/Flash.jsx';
+import CapacityBar from '../components/CapacityBar.jsx';
+import EnrollButton from '../components/EnrollButton.jsx';
 import { useEvents } from '../context/EventsContext.jsx';
+import { useSession } from '../context/SessionContext.jsx';
+import { isFull, spotsLeft } from '../lib/events.js';
 
 function formatDate(value) {
   const date = new Date(value);
@@ -13,6 +17,7 @@ function formatDate(value) {
 export default function EventDetailPage() {
   const { id } = useParams();
   const { getEvent } = useEvents();
+  const { role } = useSession();
   const event = getEvent(id);
 
   if (!event) {
@@ -30,25 +35,45 @@ export default function EventDetailPage() {
     );
   }
 
+  const registered = event.registrations.length;
+  const left = spotsLeft(event);
+  const full = isFull(event);
+
+  const info = (
+    <div className="card">
+      <div className="card__band">Fecha: {formatDate(event.date)}</div>
+      <div className="card__body">
+        <ul className="meta">
+          <li>
+            <span className="meta__label">Lugar: </span>
+            <span className="meta__value">{event.location}</span>
+          </li>
+          <li>
+            <span className="meta__label">Cupo: </span>
+            <span className="meta__value">
+              {registered} de {event.capacity}
+            </span>
+          </li>
+          <li>
+            <span className="meta__label">Disponibles: </span>
+            <span className="meta__value">
+              {full ? 'Sin cupos' : `${left} cupo${left === 1 ? '' : 's'}`}
+            </span>
+          </li>
+        </ul>
+        <CapacityBar event={event} />
+        {event.description && <p className="meta__value">{event.description}</p>}
+        <EnrollButton event={event} />
+      </div>
+    </div>
+  );
+
   return (
     <>
       <Flash />
       <PageTitle>{event.title}</PageTitle>
-      <div className="card">
-        <div className="card__band">Fecha: {formatDate(event.date)}</div>
-        <div className="card__body">
-          <ul className="meta">
-            <li>
-              <span className="meta__label">Lugar: </span>
-              <span className="meta__value">{event.location}</span>
-            </li>
-            <li>
-              <span className="meta__label">Cupo: </span>
-              <span className="meta__value">{event.capacity}</span>
-            </li>
-          </ul>
-          {event.description && <p className="meta__value">{event.description}</p>}
-        </div>
+      <div className={`event-detail${role === 'organizer' ? '' : ' event-detail--single'}`}>
+        {info}
       </div>
     </>
   );

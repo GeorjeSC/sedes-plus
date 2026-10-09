@@ -585,6 +585,12 @@
   }
 }
 
+.event-detail.event-detail--single {
+  grid-template-columns: 1fr;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 /* Estado vacío */
 .empty-state {
   padding: 32px 16px;
