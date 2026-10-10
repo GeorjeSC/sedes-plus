@@ -119,3 +119,55 @@ export function toggleAttendance(event, registrationId) {
 
   return { ...event, registrations };
 }
+
+export function markAttendanceByStudentCode(event, studentCode) {
+  const code = normalizeText(studentCode);
+  if (!code) {
+    return { ok: false, error: 'Ingresa un código de estudiante válido.' };
+  }
+
+  const registration = event.registrations.find(
+    (item) => item.studentCode.toLowerCase() === code.toLowerCase()
+  );
+
+  if (!registration) {
+    return {
+      ok: false,
+      error: `El código "${code}" no está inscrito en este evento.`,
+      status: 'not_found',
+    };
+  }
+
+  if (registration.attended) {
+    return {
+      ok: false,
+      error: `El estudiante ${registration.name} (${registration.studentCode}) ya tiene asistencia registrada.`,
+      status: 'already_attended',
+      registration,
+    };
+  }
+
+  const now = new Date().toISOString();
+  const registrations = event.registrations.map((item) => {
+    if (item.id !== registration.id) return item;
+    return {
+      ...item,
+      attended: true,
+      attendedAt: now,
+    };
+  });
+
+  const updatedRegistration = {
+    ...registration,
+    attended: true,
+    attendedAt: now,
+  };
+
+  return {
+    ok: true,
+    status: 'marked',
+    event: { ...event, registrations },
+    registration: updatedRegistration,
+  };
+}
+

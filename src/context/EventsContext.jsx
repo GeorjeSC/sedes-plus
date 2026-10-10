@@ -6,6 +6,7 @@ import {
   addRegistration,
   removeRegistration,
   toggleAttendance as toggleAttendanceRule,
+  markAttendanceByStudentCode,
 } from '../lib/events.js';
 import { useSession } from './SessionContext.jsx';
 
@@ -102,6 +103,24 @@ export function EventsProvider({ children }) {
     return { ok: true, event: updated };
   }
 
+  function checkInStudentByCode(eventId, studentCode) {
+    if (role !== 'organizer') {
+      return { ok: false, error: 'Solo el organizador puede registrar asistencia' };
+    }
+    const current = events.find((event) => event.id === eventId);
+    if (!current) {
+      return { ok: false, error: 'No encontramos este evento' };
+    }
+    const result = markAttendanceByStudentCode(current, studentCode);
+    if (!result.ok) {
+      notify('error', result.error);
+      return result;
+    }
+    setEvents((prev) => prev.map((event) => (event.id === eventId ? result.event : event)));
+    notify('success', `¡Asistencia confirmada para ${result.registration.name}!`);
+    return result;
+  }
+
   const value = {
     events,
     getEvent,
@@ -109,6 +128,7 @@ export function EventsProvider({ children }) {
     registerCurrentStudent,
     unenrollCurrentStudent,
     toggleAttendance,
+    checkInStudentByCode,
     flash,
     notify,
   };

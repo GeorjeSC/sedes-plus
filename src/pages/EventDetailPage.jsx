@@ -4,9 +4,11 @@ import Flash from '../components/Flash.jsx';
 import CapacityBar from '../components/CapacityBar.jsx';
 import EnrollButton from '../components/EnrollButton.jsx';
 import RegistrationTable from '../components/RegistrationTable.jsx';
+import AttendanceMetrics from '../components/AttendanceMetrics.jsx';
+import QuickCheckIn from '../components/QuickCheckIn.jsx';
 import { useEvents } from '../context/EventsContext.jsx';
 import { useSession } from '../context/SessionContext.jsx';
-import { attendedCount, isFull, spotsLeft } from '../lib/events.js';
+import { isFull, spotsLeft } from '../lib/events.js';
 
 function formatDate(value) {
   const date = new Date(value);
@@ -73,30 +75,48 @@ export default function EventDetailPage() {
     <>
       <Flash />
       <PageTitle>{event.title}</PageTitle>
+
+      {/* Cabecera para impresión de Acta Oficial UCSS */}
+      <div className="print-acta-header">
+        <div className="print-acta-ucss">UNIVERSIDAD CATÓLICA SEDES SAPIENTIAE</div>
+        <div className="print-acta-title">ACTA OFICIAL DE CONTROL DE ASISTENCIA</div>
+        <div className="print-acta-meta">
+          <div><strong>Evento:</strong> {event.title}</div>
+          <div><strong>Fecha:</strong> {formatDate(event.date)}</div>
+          <div><strong>Lugar:</strong> {event.location}</div>
+          <div><strong>Aforo Total:</strong> {event.capacity}</div>
+        </div>
+      </div>
+
       <div className={`event-detail${role === 'organizer' ? '' : ' event-detail--single'}`}>
-        {info}
+        <div className="event-detail__sidebar">
+          {info}
+          {role === 'organizer' && <QuickCheckIn event={event} />}
+        </div>
+
         {role === 'organizer' && (
-          <div className="card">
-            <div className="card__band">Inscritos</div>
-            <div className="card__body">
-              <ul className="meta">
-                <li>
-                  <span className="meta__label">Inscritos: </span>
-                  <span className="meta__value">{registered}</span>
-                </li>
-                <li>
-                  <span className="meta__label">Asistentes: </span>
-                  <span className="meta__value">{attendedCount(event)}</span>
-                </li>
-                <li>
-                  <span className="meta__label">Cupos libres: </span>
-                  <span className="meta__value">{left}</span>
-                </li>
-              </ul>
-              <RegistrationTable event={event} />
+          <div className="event-detail__main">
+            <div className="card">
+              <div className="card__band">Panel de Asistencia y Aforo</div>
+              <div className="card__body">
+                <AttendanceMetrics event={event} />
+                <RegistrationTable event={event} />
+              </div>
             </div>
           </div>
         )}
+      </div>
+
+      {/* Pie de firmas para impresión oficial */}
+      <div className="print-acta-signatures">
+        <div className="signature-box">
+          <div className="signature-line" />
+          <span>Firma del Organizador del Evento</span>
+        </div>
+        <div className="signature-box">
+          <div className="signature-line" />
+          <span>Coordinación Académica UCSS</span>
+        </div>
       </div>
     </>
   );

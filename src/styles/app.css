@@ -326,6 +326,12 @@
   width: 100%;
 }
 
+.btn--sm {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
 @media (min-width: 576px) {
   .btn--block-sm {
     width: auto;
@@ -919,6 +925,327 @@
   border-top: 1px solid var(--border);
 }
 
+/* Sidebar y Main en detalle de evento */
+.event-detail__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.event-detail__main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Dashboard de Métricas de Asistencia */
+.attendance-metrics-container {
+  margin-bottom: 20px;
+}
+
+.attendance-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 576px) {
+  .attendance-metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.metric-card {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border-left: 3px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-card--highlight {
+  border-left-color: var(--success);
+  background: #f0fdf4;
+}
+
+.metric-card__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.metric-card__value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.metric-card__value--success {
+  color: var(--success);
+}
+
+.metric-card__value--pending {
+  color: var(--primary-dark);
+}
+
+.metric-card__total {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.metric-card__sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.attendance-progress-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+.attendance-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.attendance-progress-bar {
+  height: 8px;
+  background: #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.attendance-progress-bar__fill {
+  height: 100%;
+  background: var(--success);
+  transition: width 0.3s ease;
+}
+
+/* Control de Ingreso en Puerta (Quick Check-in) */
+.quick-checkin-card {
+  border-top: 3px solid var(--primary-dark);
+}
+
+.quick-checkin-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.quick-checkin-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .quick-checkin-input-wrapper {
+    flex-direction: row;
+  }
+
+  .quick-checkin-input-wrapper .btn {
+    white-space: nowrap;
+  }
+}
+
+.quick-checkin-input {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.quick-checkin-input:focus-visible {
+  outline: 2px solid var(--link);
+}
+
+.quick-checkin-feedback {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.feedback--success {
+  background: #d1e7dd;
+  border-left: 4px solid var(--success);
+  color: #0f5132;
+}
+
+.feedback--warning {
+  background: #fff3cd;
+  border-left: 4px solid var(--warning);
+  color: #664d03;
+}
+
+.feedback--danger {
+  background: #f8d7da;
+  border-left: 4px solid var(--danger);
+  color: #842029;
+}
+
+.feedback__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.feedback__close {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.feedback__message {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.quick-shortcuts {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.quick-shortcuts__title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.quick-shortcuts__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.quick-shortcut-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--link);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.quick-shortcut-btn:hover {
+  background: var(--primary-faint);
+  border-color: var(--primary);
+}
+
+/* Herramientas de la tabla de inscritos */
+.table-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 640px) {
+  .table-toolbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.table-toolbar__search {
+  flex: 1;
+  max-width: 320px;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.search-input:focus-visible {
+  outline: 2px solid var(--link);
+}
+
+.table-toolbar__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+.filter-tab {
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.filter-tab:hover {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.filter-tab--active {
+  color: var(--primary-dark);
+  background: var(--primary-faint);
+}
+
+.empty-filter-state {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+}
+
+/* Impresión oficial de acta */
+.print-acta-header,
+.print-acta-signatures {
+  display: none;
+}
+
 /* Impresión */
 @media print {
   body {
@@ -955,5 +1282,78 @@
     background: #ffffff !important;
     border: 1px solid #000000 !important;
   }
+
+  .print-acta-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #000000;
+  }
+
+  .print-acta-ucss {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .print-acta-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 6px 0 12px;
+  }
+
+  .print-acta-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .table-toolbar,
+  .filter-tabs,
+  .quick-checkin-card,
+  .page-title,
+  .card__band,
+  .attendance-progress-box,
+  .event-detail__sidebar {
+    display: none !important;
+  }
+
+  .event-detail {
+    display: block !important;
+  }
+
+  .reg-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .reg-table th,
+  .reg-table td {
+    border: 1px solid #000000 !important;
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+    color: #000000 !important;
+  }
+
+  .print-acta-signatures {
+    display: flex !important;
+    justify-content: space-around;
+    margin-top: 60px;
+    page-break-inside: avoid;
+  }
+
+  .signature-box {
+    text-align: center;
+    width: 200px;
+  }
+
+  .signature-line {
+    border-top: 1px solid #000000;
+    margin-bottom: 6px;
+  }
 }
+
 
