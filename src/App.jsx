@@ -1,17 +1,23 @@
 import { Route, Routes } from 'react-router-dom';
-import DemoBar from './components/DemoBar.jsx';
 import Header from './components/Header.jsx';
 import EventsListPage from './pages/EventsListPage.jsx';
 import NewEventPage from './pages/NewEventPage.jsx';
 import EventDetailPage from './pages/EventDetailPage.jsx';
 import MyRegistrationsPage from './pages/MyRegistrationsPage.jsx';
+import UcssLoginPage from './pages/UcssLoginPage.jsx';
+import { useSession } from './context/SessionContext.jsx';
 
 export default function App() {
+  const { isLoggedIn } = useSession();
+
+  if (!isLoggedIn) {
+    return <UcssLoginPage />;
+  }
+
   return (
-    <>
-      <DemoBar />
+    <div className="intranet-app-wrapper">
       <Header />
-      <main className="container">
+      <main className="container intranet-main-content">
         <Routes>
           <Route path="/" element={<EventsListPage />} />
           <Route path="/events/new" element={<NewEventPage />} />
@@ -20,6 +26,6 @@ export default function App() {
           <Route path="*" element={<EventsListPage />} />
         </Routes>
       </main>
-    </>
+    </div>
   );
 }
