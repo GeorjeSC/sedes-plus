@@ -57,8 +57,13 @@ export default function EnrollButton({ event }) {
         )}
 
         {showConfirmCancel && (
-          <div className="modal-backdrop" role="dialog" aria-modal="true">
-            <div className="modal-content modal-confirm">
+          <div
+            className="modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowConfirmCancel(false)}
+          >
+            <div className="modal-content modal-confirm" onClick={(e) => e.stopPropagation()}>
               <h3 className="modal-confirm__title">¿Cancelar tu inscripción?</h3>
               <p className="modal-confirm__text">
                 Al cancelar, tu cupo en <strong>{event.title}</strong> quedará disponible para otro

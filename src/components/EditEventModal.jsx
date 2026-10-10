@@ -54,8 +54,14 @@ export default function EditEventModal({ event, onClose }) {
   }
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="edit-event-title">
-      <div className="modal-content modal-edit-event">
+    <div
+      className="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-event-title"
+      onClick={onClose}
+    >
+      <div className="modal-content modal-edit-event" onClick={(e) => e.stopPropagation()}>
         <header className="modal-edit-header">
           <h2 id="edit-event-title" className="modal-edit-title">
             Editar Evento y Ciclo de Vida

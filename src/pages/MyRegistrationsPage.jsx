@@ -139,8 +139,14 @@ export default function MyRegistrationsPage() {
 
       {/* Modal Confirmación de Cancelación */}
       {eventToCancel && (
-        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirm-cancel-title">
-          <div className="modal-content modal-confirm">
+        <div
+          className="modal-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-cancel-title"
+          onClick={() => setEventToCancel(null)}
+        >
+          <div className="modal-content modal-confirm" onClick={(e) => e.stopPropagation()}>
             <h3 id="confirm-cancel-title" className="modal-confirm__title">
               ¿Cancelar tu inscripción?
             </h3>
