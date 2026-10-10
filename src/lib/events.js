@@ -97,11 +97,130 @@ export function removeRegistration(event, studentCode) {
     (registration) => registration.studentCode !== studentCode
   );
 
+  let updatedEvent = {
+    ...event,
+    registrations,
+    waitlist: event.waitlist || [],
+  };
+
+  let promotedStudent = null;
+  if (updatedEvent.waitlist && updatedEvent.waitlist.length > 0) {
+    const [firstInWaitlist, ...remainingWaitlist] = updatedEvent.waitlist;
+    const promotedRegistration = {
+      id: crypto.randomUUID(),
+      studentCode: firstInWaitlist.studentCode,
+      name: firstInWaitlist.name,
+      attended: false,
+      attendedAt: null,
+      createdAt: new Date().toISOString(),
+    };
+    updatedEvent = {
+      ...updatedEvent,
+      registrations: [...updatedEvent.registrations, promotedRegistration],
+      waitlist: remainingWaitlist,
+    };
+    promotedStudent = firstInWaitlist;
+  }
+
+  return {
+    ok: true,
+    event: updatedEvent,
+    promotedStudent,
+  };
+}
+
+export function isInWaitlist(event, studentCode) {
+  return (event.waitlist || []).some((w) => w.studentCode === studentCode);
+}
+
+export function getWaitlistPosition(event, studentCode) {
+  const index = (event.waitlist || []).findIndex((w) => w.studentCode === studentCode);
+  return index >= 0 ? index + 1 : null;
+}
+
+export function addToWaitlist(event, student) {
+  if (!student || !student.code) {
+    return { ok: false, error: 'No hay un estudiante en la sesión' };
+  }
+  if (isRegistered(event, student.code)) {
+    return { ok: false, error: 'Ya estás inscrito en este evento' };
+  }
+  if (isInWaitlist(event, student.code)) {
+    return { ok: false, error: 'Ya estás en la lista de espera' };
+  }
+  if (!isFull(event)) {
+    return { ok: false, error: 'Aún quedan cupos libres, puedes inscribirte directamente' };
+  }
+
+  const entry = {
+    id: crypto.randomUUID(),
+    studentCode: student.code,
+    name: student.name,
+    createdAt: new Date().toISOString(),
+  };
+
+  const waitlist = [...(event.waitlist || []), entry];
+
   return {
     ok: true,
     event: {
       ...event,
-      registrations,
+      waitlist,
+    },
+    position: waitlist.length,
+  };
+}
+
+export function removeFromWaitlist(event, studentCode) {
+  if (!studentCode) {
+    return { ok: false, error: 'No se especificó el código del estudiante' };
+  }
+  if (!isInWaitlist(event, studentCode)) {
+    return { ok: false, error: 'No estás en la lista de espera de este evento' };
+  }
+
+  const waitlist = (event.waitlist || []).filter((w) => w.studentCode !== studentCode);
+
+  return {
+    ok: true,
+    event: {
+      ...event,
+      waitlist,
+    },
+  };
+}
+
+export function updateEvent(event, data = {}) {
+  const title = normalizeText(data.title ?? event.title);
+  const location = normalizeText(data.location ?? event.location);
+  const date = normalizeText(data.date ?? event.date);
+  const description = normalizeText(data.description ?? event.description);
+  const capacity = Number(data.capacity ?? event.capacity);
+  const status = data.status || event.status || 'open';
+
+  if (!title) return { ok: false, error: 'El título es obligatorio' };
+  if (!date) return { ok: false, error: 'La fecha es obligatoria' };
+  if (!location) return { ok: false, error: 'El lugar es obligatorio' };
+  if (!Number.isInteger(capacity) || capacity <= 0) {
+    return { ok: false, error: 'El cupo debe ser un número entero mayor que 0' };
+  }
+  if (capacity < event.registrations.length) {
+    return {
+      ok: false,
+      error: `El cupo (${capacity}) no puede ser menor a los ${event.registrations.length} inscritos actuales.`,
+    };
+  }
+
+  return {
+    ok: true,
+    event: {
+      ...event,
+      title,
+      location,
+      date,
+      description,
+      capacity,
+      status,
     },
   };
 }

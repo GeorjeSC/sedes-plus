@@ -1,12 +1,23 @@
 import { useState } from 'react';
 import { useSession } from '../context/SessionContext.jsx';
 import { useEvents } from '../context/EventsContext.jsx';
-import { isFull, isRegistered, getRegistration } from '../lib/events.js';
+import {
+  isFull,
+  isRegistered,
+  getRegistration,
+  isInWaitlist,
+  getWaitlistPosition,
+} from '../lib/events.js';
 import StudentTicketModal from './StudentTicketModal.jsx';
 
 export default function EnrollButton({ event }) {
   const { role, student } = useSession();
-  const { registerCurrentStudent, unenrollCurrentStudent } = useEvents();
+  const {
+    registerCurrentStudent,
+    unenrollCurrentStudent,
+    joinWaitlist,
+    leaveWaitlist,
+  } = useEvents();
   const [showTicket, setShowTicket] = useState(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState(false);
 
@@ -79,11 +90,44 @@ export default function EnrollButton({ event }) {
     );
   }
 
-  if (isFull(event)) {
+  // Estudiante en lista de espera
+  if (isInWaitlist(event, student.code)) {
+    const position = getWaitlistPosition(event, student.code);
     return (
-      <button type="button" className="btn btn--primary btn--block" disabled>
-        Evento lleno
-      </button>
+      <div className="waitlist-status-box">
+        <span className="badge badge--warning waitlist-badge">
+          ⏳ En Lista de Espera (Turno #{position})
+        </span>
+        <p className="waitlist-hint">
+          Si algún inscrito cancela su cupo, serás promovido automáticamente.
+        </p>
+        <button
+          type="button"
+          className="btn btn--secondary btn--block btn--sm"
+          onClick={() => leaveWaitlist(event.id)}
+        >
+          Salir de la lista de espera
+        </button>
+      </div>
+    );
+  }
+
+  // Evento lleno: opción inteligente de lista de espera
+  if (isFull(event)) {
+    const waitlistCount = (event.waitlist || []).length;
+    return (
+      <div className="event-full-box">
+        <button type="button" className="btn btn--block btn--disabled-full" disabled>
+          Evento lleno
+        </button>
+        <button
+          type="button"
+          className="btn btn--primary btn--block waitlist-join-btn"
+          onClick={() => joinWaitlist(event.id)}
+        >
+          Anotarme en Lista de Espera {waitlistCount > 0 ? `(${waitlistCount} en cola)` : ''}
+        </button>
+      </div>
     );
   }
 

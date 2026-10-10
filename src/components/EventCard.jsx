@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 import CapacityBar from './CapacityBar.jsx';
-import { isFull, spotsLeft } from '../lib/events.js';
+import { useSession } from '../context/SessionContext.jsx';
+import {
+  isFull,
+  spotsLeft,
+  isRegistered,
+  isInWaitlist,
+  getWaitlistPosition,
+} from '../lib/events.js';
 
 function formatDate(value) {
   const date = new Date(value);
@@ -10,13 +17,27 @@ function formatDate(value) {
 }
 
 export default function EventCard({ event }) {
-  const registered = event.registrations.length;
+  const { role, student } = useSession();
+  const registered = event.registrations?.length || 0;
+  const waitlistCount = event.waitlist?.length || 0;
   const left = spotsLeft(event);
   const full = isFull(event);
 
+  const studentEnrolled = role === 'student' && student && isRegistered(event, student.code);
+  const studentWaitlisted = role === 'student' && student && isInWaitlist(event, student.code);
+  const waitlistPos = studentWaitlisted ? getWaitlistPosition(event, student.code) : null;
+
   return (
-    <article className="card">
-      <div className="card__band">Fecha: {formatDate(event.date)}</div>
+    <article className="card card--event">
+      <div className="card__band">
+        <span>Fecha: {formatDate(event.date)}</span>
+        {event.status === 'finished' && <span className="badge badge--warning">Finalizado</span>}
+        {event.status === 'cancelled' && <span className="badge badge--danger">Cancelado</span>}
+        {studentEnrolled && <span className="badge badge--success">✓ Inscrito</span>}
+        {studentWaitlisted && (
+          <span className="badge badge--warning">⏳ Espera #{waitlistPos}</span>
+        )}
+      </div>
       <div className="card__body">
         <h2 className="card__title">{event.title}</h2>
         <ul className="meta">
@@ -36,6 +57,14 @@ export default function EventCard({ event }) {
               {full ? 'Sin cupos' : `${left} cupo${left === 1 ? '' : 's'}`}
             </span>
           </li>
+          {waitlistCount > 0 && (
+            <li>
+              <span className="meta__label">Lista de espera: </span>
+              <span className="meta__value">
+                {waitlistCount} alumno{waitlistCount === 1 ? '' : 's'} en cola
+              </span>
+            </li>
+          )}
         </ul>
         <CapacityBar event={event} />
         <Link className="btn btn--secondary btn--block" to={`/events/${event.id}`}>
