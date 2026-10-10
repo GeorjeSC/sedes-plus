@@ -1,21 +1,24 @@
 # Sedes+
 
-**Sedes+** es un prototipo de módulo para el intranet de estudiantes de la UCSS que permite gestionar inscripciones a eventos universitarios. El organizador crea un evento con cupo, los estudiantes se inscriben con un clic desde su sesión, y el organizador ve la lista de inscritos y marca la asistencia en el momento. Se usa igual de bien desde el celular que desde la computadora.
+**Sedes+** es un prototipo de módulo para el intranet de estudiantes de la UCSS que permite gestionar inscripciones y controlar la asistencia a eventos universitarios. El organizador crea un evento con cupo, los estudiantes se inscriben con un clic desde su sesión, y el organizador ve la lista de inscritos, controla el aforo y marca la asistencia en el momento. Si el cupo se llena, entra en juego la lista de espera con promoción automática. Se usa igual de bien desde el celular que desde la computadora.
 
-> **Proyecto académico.** No está conectado al intranet real de la UCSS ni usa credenciales reales: la sesión del estudiante se simula con una barra de demo y los estudiantes de ejemplo son ficticios.
+> **Proyecto académico.** No está conectado al intranet real de la UCSS ni usa credenciales reales: el acceso se simula con una pantalla de login institucional y los estudiantes de ejemplo son ficticios.
 
 ## El problema
 
-Los organizadores de eventos estudiantiles (charlas, torneos y talleres) tienen dificultad para controlar inscritos y asistencia, lo que causa aforos excedidos y listas desordenadas. Google Forms y las hojas de papel no controlan cupos ni registran la asistencia en el momento.
+Los organizadores de eventos estudiantiles (charlas, torneos y talleres) tienen dificultad para controlar inscritos y asistencia, lo que causa aforos excedidos y listas desordenadas. Google Forms y las hojas de papel no controlan cupos, no manejan lista de espera ni registran la asistencia en el momento.
 
 ## Funcionalidades
 
-- Crear un evento con cupo (organizador)
-- Ver la lista de eventos con los cupos disponibles
-- Inscribirse con un clic usando la sesión del estudiante; se bloquea si el cupo está lleno o si ya está inscrito
-- Ver la lista de inscritos de cada evento (organizador)
-- Marcar la asistencia de cada inscrito (organizador)
-- Diseño responsive, con la apariencia del intranet de estudiantes
+- **Acceso institucional simulado:** pantalla de login con el estilo del intranet y acceso rápido de demo para cualquiera de los 8 estudiantes o como organizador.
+- **Eventos con cupo (organizador):** crear, editar (incluido el ciclo de vida: abierto, en curso, finalizado, cancelado) y eliminar eventos.
+- **Listado de eventos:** búsqueda por título, lugar o descripción; filtros por estado (todos, con cupos, llenos, finalizados) y orden por fecha, cupos libres o capacidad.
+- **Inscripción del estudiante:** un clic con la sesión activa, con bloqueo si el cupo está lleno o si ya está inscrito, y pase digital de ingreso con comprobante.
+- **Lista de espera inteligente:** se activa cuando el evento está lleno, muestra el turno en la cola y sube automáticamente al primero en espera cuando alguien cancela.
+- **Gestión de asistencia (organizador):** lista de inscritos, panel de métricas de aforo, validador rápido de ingreso por código, exportación a CSV y "Acta Oficial de Control de Asistencia" imprimible.
+- **Mis inscripciones (estudiante):** portal con los eventos en los que está inscrito, el pase digital y la cancelación de cupo.
+- **Centro de notificaciones:** recordatorios de eventos, posición en la lista de espera, aviso de últimos cupos y eventos con lista de espera activa.
+- **Diseño responsive**, con la apariencia del intranet de estudiantes.
 
 **Fuera del alcance de esta versión:** login real e integración con las credenciales del intranet, certificados, pagos, códigos QR y correos automáticos.
 
@@ -41,23 +44,28 @@ npm install
 npm run dev
 ```
 
-Abre <http://localhost:5173> en el navegador. Para generar la versión de producción: `npm run build`.
+Abre <http://localhost:5173> en el navegador. Para generar la versión de producción: `npm run build`. Otros comandos: `npm run preview` (sirve la build) y `npm run lint` (oxlint).
 
 ## Cómo usarlo
 
-La barra amarilla de arriba (**Modo demo**) simula la sesión del intranet:
+Al entrar, la aplicación muestra la **pantalla de acceso del intranet**. El usuario y la contraseña no se validan: usa el panel de **acceso rápido de demo** para entrar como cualquiera de los 8 estudiantes de ejemplo o como **Organizador**.
 
-1. Elige el rol **Organizador**, pulsa **Nuevo evento**, completa título, fecha, lugar y cupo, y guarda.
-2. Cambia al rol **Estudiante**, elige uno de los 8 estudiantes de ejemplo y abre el evento.
-3. Pulsa **Inscribirme**. Cuando el cupo se llena, el sistema no permite más inscripciones.
-4. Vuelve al rol **Organizador**, abre el evento y marca la asistencia de cada persona en la lista de inscritos.
+1. Entra como **Organizador**, pulsa **Nuevo evento**, completa título, fecha, lugar y cupo, y guarda.
+2. Cambia a un **Estudiante** y abre el evento.
+3. Pulsa **Inscribirme**. Cuando el cupo se llena, el sistema bloquea nuevas inscripciones y ofrece la **lista de espera**.
+4. Abre **Mis inscripciones** para ver el pase digital o cancelar tu cupo.
+5. Vuelve como **Organizador**, abre el evento y marca la asistencia, usa el validador por código, exporta a CSV o imprime el acta.
 
-La primera vez, la aplicación carga dos eventos de ejemplo (uno casi lleno) y ocho estudiantes ficticios. La barra de demo recuerda el rol y el estudiante al recargar la página. Para probar el diseño en celular, reduce el ancho de la ventana a 360, 768 y 1280 px o usa el modo dispositivo de las herramientas del navegador.
+La primera vez, la aplicación carga tres eventos de ejemplo (uno de ellos lleno, para probar la lista de espera) y ocho estudiantes ficticios. La sesión se recuerda al recargar la página. Para probar el diseño en celular, reduce el ancho de la ventana a 360, 768 y 1280 px o usa el modo dispositivo de las herramientas del navegador.
+
+## Documentación
+
+La documentación técnica completa (arquitectura, modelo de datos, roles y permisos, reglas de negocio, rutas y API de los contextos) está en [`DOCUMENTACION.md`](./DOCUMENTACION.md).
 
 ## Publicar en GitHub
 
 ```bash
-git remote add origin https://github.com/<USUARIO>/<REPOSITORIO>.git
+git remote add origin https://github.com/GeorjeSC/sedes-plus.git
 git push -u origin main
 ```
 
@@ -77,20 +85,24 @@ También se puede desplegar desde la terminal con [`vercel`](https://vercel.com/
 
 - Los datos se guardan en el navegador donde se usa la aplicación: no se comparten entre dispositivos ni entre navegadores.
 - La sesión es simulada; no hay inicio de sesión real.
+- No hay pruebas automatizadas.
 - Para volver a los datos de ejemplo, borra las claves `sedes-plus:v1:events` y `sedes-plus:v1:session` en las herramientas del navegador (Application, Local Storage) y recarga la página.
 
 ## Estructura del proyecto
 
 ```
-src/pages/        EventsListPage, NewEventPage, EventDetailPage
-src/components/   Header, DemoBar, EventCard, CapacityBar, EnrollButton, RegistrationTable, Flash
-src/context/      SessionContext (rol y estudiante) y EventsContext (eventos)
-src/lib/          events.js (reglas de negocio) y storage.js (localStorage)
-src/data/         students.js (8 estudiantes ficticios) y seed.js (2 eventos de ejemplo)
+src/pages/        UcssLoginPage, EventsListPage, NewEventPage, EventDetailPage, MyRegistrationsPage
+src/components/   Header, PageTitle, EventCard, CapacityBar, EnrollButton, RegistrationTable,
+                  AttendanceMetrics, QuickCheckIn, EditEventModal, StudentTicketModal,
+                  NotificationsCenter, Flash
+src/context/      SessionContext (sesión simulada) y EventsContext (eventos, acciones y flash)
+src/lib/          events.js (reglas de negocio), attendance.js (métricas y CSV) y storage.js (localStorage)
+src/data/         students.js (8 estudiantes ficticios) y seed.js (3 eventos de ejemplo)
 src/styles/       theme.css (colores, tipografía y formas) y app.css
 vercel.json       configuración de despliegue (rewrite de SPA)
 .nvmrc            versión de Node (22)
 .opencode/skills/ instrucciones para agentes de IA (alcance, estructura y estilo)
+DOCUMENTACION.md  documentación técnica del proyecto
 ```
 
 ## Skills para agentes de IA
@@ -108,18 +120,4 @@ El repositorio incluye tres skills en `.opencode/skills/` que guían a un asiste
 | Versión | Descripción |
 |---|---|
 | v0.1.0 | Primer prototipo: eventos con cupo, inscripción con sesión simulada, lista de inscritos y asistencia |
-
-## Equipo
-
-| Integrante | Rol |
-|---|---|
-| Georje Soto | Prototipo |
-| _(nombre)_ | Problema y alcance |
-| _(nombre)_ | Presentación |
-| _(nombre)_ | Gestión de Configuración (Git) |
-| _(nombre)_ | Validación y retroalimentación |
-| _(nombre)_ | Demo y pruebas |
-
-## Contexto académico
-
-Proyecto de taller universitario (Opción 7: gestión de inscripciones para eventos universitarios).
+| v1.0.0 | Acceso institucional simulado, lista de espera inteligente, ciclo de vida de eventos, búsqueda y filtros, métricas de aforo, check-in por código, exportación a CSV, pase digital y centro de notificaciones |
