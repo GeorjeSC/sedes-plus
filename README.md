@@ -38,7 +38,7 @@ Los organizadores de eventos estudiantiles (charlas, torneos y talleres) tienen 
 ## Instalación y ejecución
 
 ```bash
-git clone <URL-DEL-REPOSITORIO>
+git clone https://github.com/GeorjeSC/sedes-plus.git
 cd sedes-plus
 npm install
 npm run dev
@@ -65,7 +65,7 @@ La documentación técnica completa (arquitectura, modelo de datos, roles y perm
 ## Publicar en GitHub
 
 ```bash
-git remote add origin https://github.com/GeorjeSC/sedes-plus.git
+git remote add origin https://github.com/<USUARIO>/<REPOSITORIO>.git
 git push -u origin main
 ```
 
