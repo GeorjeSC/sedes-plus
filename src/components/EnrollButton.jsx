@@ -36,7 +36,7 @@ export default function EnrollButton({ event }) {
             className="btn btn--primary btn--block"
             onClick={() => setShowTicket(true)}
           >
-            Ver pase digital (QR)
+            Ver comprobante de ingreso
           </button>
           <button
             type="button"

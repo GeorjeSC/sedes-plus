@@ -13,7 +13,7 @@ export default function QuickCheckIn({ event }) {
 
     let targetCode = codeToProcess.trim();
 
-    // Si se pegó o escaneó un JSON proveniente del QR generado
+    // Soporte para procesar código de estudiante o comprobante
     if (targetCode.startsWith('{') && targetCode.endsWith('}')) {
       try {
         const parsed = JSON.parse(targetCode);
@@ -53,7 +53,7 @@ export default function QuickCheckIn({ event }) {
       <div className="card__band">Control de Ingreso en Puerta (Check-in)</div>
       <div className="card__body">
         <p className="quick-checkin-desc">
-          Valida estudiantes al ingresar al aula escribiendo o escaneando su código UCSS:
+          Valida estudiantes al ingresar al aula escribiendo su código UCSS:
         </p>
 
         <form onSubmit={handleSubmit} className="quick-checkin-form">
@@ -61,7 +61,7 @@ export default function QuickCheckIn({ event }) {
             <input
               type="text"
               className="quick-checkin-input"
-              placeholder="Ingresa código o escaneo QR (ej. 20230101)..."
+              placeholder="Ingresa código de estudiante (ej. 20211234)..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               aria-label="Código de estudiante para registrar ingreso"

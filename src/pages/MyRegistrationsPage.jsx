@@ -105,7 +105,7 @@ export default function MyRegistrationsPage() {
                         })
                       }
                     >
-                      Pase Digital (QR)
+                      Ver Comprobante
                     </button>
 
                     <button
@@ -127,7 +127,7 @@ export default function MyRegistrationsPage() {
         </div>
       )}
 
-      {/* Modal Pase Digital con QR */}
+      {/* Modal Comprobante Oficial de Inscripción */}
       {selectedTicket && (
         <StudentTicketModal
           event={selectedTicket.event}

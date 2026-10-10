@@ -76,13 +76,13 @@ export default function Header() {
           </span>
 
           {role === 'student' && (
-            <NavLink to="/my-registrations" className="header__link header__link--active-module" onClick={closeMenu}>
+            <NavLink to="/my-registrations" className="header__link" onClick={closeMenu}>
               Mis inscripciones{myEnrollmentCount > 0 ? ` (${myEnrollmentCount})` : ''}
             </NavLink>
           )}
 
           {role === 'organizer' && (
-            <NavLink to="/events/new" className="header__link header__link--active-module" onClick={closeMenu}>
+            <NavLink to="/events/new" className="header__link" onClick={closeMenu}>
               + Nuevo evento
             </NavLink>
           )}

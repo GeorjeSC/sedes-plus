@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
+import { useEffect } from 'react';
 
 function formatEventDate(value) {
   const date = new Date(value);
@@ -9,32 +8,6 @@ function formatEventDate(value) {
 }
 
 export default function StudentTicketModal({ event, student, registration, onClose }) {
-  const [qrSrc, setQrSrc] = useState('');
-
-  useEffect(() => {
-    if (!event || !student) return;
-
-    const payload = JSON.stringify({
-      app: 'SEDES+',
-      inst: 'UCSS',
-      eventId: event.id,
-      title: event.title,
-      code: student.code,
-      name: student.name,
-      registeredAt: registration?.createdAt || new Date().toISOString(),
-    });
-
-    QRCode.toDataURL(payload, {
-      width: 220,
-      margin: 1,
-      color: {
-        dark: '#212529',
-        light: '#FFFFFF',
-      },
-    })
-      .then((url) => setQrSrc(url))
-      .catch((err) => console.error('Error generando QR:', err));
-  }, [event, student, registration]);
 
   useEffect(() => {
     function handleKeyDown(e) {
@@ -113,13 +86,14 @@ export default function StudentTicketModal({ event, student, registration, onClo
             )}
           </div>
 
-          <div className="ticket-qr-container">
-            {qrSrc ? (
-              <img src={qrSrc} alt="Código QR de Pase Digital" className="ticket-qr-image" />
-            ) : (
-              <div className="ticket-qr-placeholder">Generando QR...</div>
-            )}
-            <p className="ticket-qr-help">Muestra este código al organizador en el ingreso</p>
+          <div className="ticket-validation-box">
+            <span className="ticket-label">Código de Comprobante</span>
+            <div className="ticket-validation-code">
+              SEDES-{event.id.replace('demo-', '').toUpperCase()}-{student.code}
+            </div>
+            <p className="ticket-validation-note">
+              Presenta tu DNI o carné universitario junto a este comprobante al momento de ingresar.
+            </p>
           </div>
         </div>
 

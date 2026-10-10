@@ -33,7 +33,7 @@ export default function NotificationsCenter() {
           id: `reminder-${ev.id}`,
           type: 'reminder',
           title: 'Recordatorio de Evento',
-          message: `Estás inscrito en "${ev.title}". Recuerda presentar tu Pase Digital con QR en ${ev.location}.`,
+          message: `Estás inscrito en "${ev.title}". Recuerda presentar tu comprobante de ingreso en ${ev.location}.`,
           time: 'Próximamente',
           link: `/events/${ev.id}`,
         });

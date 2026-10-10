@@ -912,39 +912,36 @@
   text-align: center;
 }
 
-.ticket-qr-container {
+.ticket-validation-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
-  background: var(--primary-faint);
+  padding: 16px 20px;
+  background: #f8f9fa;
   border-radius: var(--radius-sm);
-  border: 1px dashed var(--primary);
-}
-
-.ticket-qr-image {
-  width: 180px;
-  height: 180px;
-  background: #ffffff;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow);
-}
-
-.ticket-qr-placeholder {
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-}
-
-.ticket-qr-help {
-  margin: 10px 0 0;
-  font-size: 13px;
-  color: var(--muted);
+  border: 1px dashed #39a1c4;
   text-align: center;
-  font-weight: 700;
+  margin-top: 10px;
+}
+
+.ticket-validation-code {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 800;
+  color: #39a1c4;
+  letter-spacing: 0.12em;
+  background: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  margin: 6px 0;
+}
+
+.ticket-validation-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .ticket-footer {
@@ -1549,7 +1546,7 @@
     color: #000000 !important;
   }
 
-  .ticket-qr-container {
+  .ticket-validation-box {
     background: #ffffff !important;
     border: 1px solid #000000 !important;
   }
@@ -2017,11 +2014,6 @@
   font-size: 14px;
   font-weight: 600;
   cursor: default;
-}
-
-.header__link--active-module {
-  color: #ffffff !important;
-  border-bottom: 3px solid #ffffff !important;
 }
 
 .header__link--exit {
