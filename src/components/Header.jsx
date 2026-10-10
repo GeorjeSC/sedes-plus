@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useSession } from '../context/SessionContext.jsx';
+import { useEvents } from '../context/EventsContext.jsx';
+import { isRegistered } from '../lib/events.js';
 
 export default function Header() {
   const { role, student } = useSession();
+  const { events } = useEvents();
   const [open, setOpen] = useState(false);
 
   const closeMenu = () => setOpen(false);
   const userLabel = role === 'organizer' ? 'Organizador' : student?.name ?? 'Estudiante';
+
+  const myEnrollmentCount =
+    role === 'student' && student
+      ? events.filter((event) => isRegistered(event, student.code)).length
+      : 0;
 
   return (
     <header className="header">
@@ -35,6 +43,11 @@ export default function Header() {
           <NavLink to="/" end className="header__link" onClick={closeMenu}>
             Inicio
           </NavLink>
+          {role === 'student' && (
+            <NavLink to="/my-registrations" className="header__link" onClick={closeMenu}>
+              Mis inscripciones{myEnrollmentCount > 0 ? ` (${myEnrollmentCount})` : ''}
+            </NavLink>
+          )}
           {role === 'organizer' && (
             <NavLink to="/events/new" className="header__link" onClick={closeMenu}>
               Nuevo evento

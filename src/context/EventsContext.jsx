@@ -4,6 +4,7 @@ import seedEvents from '../data/seed.js';
 import {
   createEvent as createEventRule,
   addRegistration,
+  removeRegistration,
   toggleAttendance as toggleAttendanceRule,
 } from '../lib/events.js';
 import { useSession } from './SessionContext.jsx';
@@ -68,6 +69,24 @@ export function EventsProvider({ children }) {
     return { ok: true, event: result.event };
   }
 
+  function unenrollCurrentStudent(eventId) {
+    if (role !== 'student' || !student) {
+      return { ok: false, error: 'Solo los estudiantes pueden cancelar inscripciones' };
+    }
+    const current = events.find((event) => event.id === eventId);
+    if (!current) {
+      return { ok: false, error: 'No encontramos este evento' };
+    }
+    const result = removeRegistration(current, student.code);
+    if (!result.ok) {
+      notify('error', result.error);
+      return result;
+    }
+    setEvents((prev) => prev.map((event) => (event.id === eventId ? result.event : event)));
+    notify('success', 'Inscripción cancelada. Se liberó tu cupo.');
+    return { ok: true, event: result.event };
+  }
+
   function toggleAttendance(eventId, registrationId) {
     if (role !== 'organizer') {
       return { ok: false, error: 'Solo el organizador puede marcar la asistencia' };
@@ -88,6 +107,7 @@ export function EventsProvider({ children }) {
     getEvent,
     createEvent,
     registerCurrentStudent,
+    unenrollCurrentStudent,
     toggleAttendance,
     flash,
     notify,

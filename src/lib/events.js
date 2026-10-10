@@ -81,6 +81,31 @@ export function addRegistration(event, student) {
   };
 }
 
+export function getRegistration(event, studentCode) {
+  return event.registrations.find((registration) => registration.studentCode === studentCode) ?? null;
+}
+
+export function removeRegistration(event, studentCode) {
+  if (!studentCode) {
+    return { ok: false, error: 'No se especificó el código del estudiante' };
+  }
+  if (!isRegistered(event, studentCode)) {
+    return { ok: false, error: 'No estás inscrito en este evento' };
+  }
+
+  const registrations = event.registrations.filter(
+    (registration) => registration.studentCode !== studentCode
+  );
+
+  return {
+    ok: true,
+    event: {
+      ...event,
+      registrations,
+    },
+  };
+}
+
 export function toggleAttendance(event, registrationId) {
   const registrations = event.registrations.map((registration) => {
     if (registration.id !== registrationId) return registration;

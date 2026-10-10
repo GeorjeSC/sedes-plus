@@ -4,6 +4,7 @@ import Header from './components/Header.jsx';
 import EventsListPage from './pages/EventsListPage.jsx';
 import NewEventPage from './pages/NewEventPage.jsx';
 import EventDetailPage from './pages/EventDetailPage.jsx';
+import MyRegistrationsPage from './pages/MyRegistrationsPage.jsx';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<EventsListPage />} />
           <Route path="/events/new" element={<NewEventPage />} />
           <Route path="/events/:id" element={<EventDetailPage />} />
+          <Route path="/my-registrations" element={<MyRegistrationsPage />} />
           <Route path="*" element={<EventsListPage />} />
         </Routes>
       </main>
