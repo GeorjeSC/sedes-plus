@@ -1,11 +1,33 @@
 const seedEvents = [
   {
+    id: 'demo-taller-linkedin',
+    title: 'Taller Gratuito: LinkedIn y Networking Profesional',
+    description: '¿Tu LinkedIn está listo para abrirte nuevas oportunidades? Aprende cómo crear y potenciar tu perfil profesional con Emplea UCSS.',
+    date: '2026-10-21T15:30',
+    location: 'Modalidad Virtual (Transmisión UCSS)',
+    capacity: 25,
+    status: 'open',
+    createdAt: '2026-10-01T08:00:00.000Z',
+    registrations: [
+      {
+        id: 'demo-reg-0',
+        studentCode: '20211234',
+        name: 'Ana Torres Quispe',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-02T10:00:00.000Z',
+      },
+    ],
+    waitlist: [],
+  },
+  {
     id: 'demo-charla-innovacion',
     title: 'Charla de innovación tecnológica',
     description: 'Conversatorio sobre tendencias tecnológicas para estudiantes.',
     date: '2026-11-12T18:00',
     location: 'Auditorio Central',
     capacity: 30,
+    status: 'open',
     createdAt: '2026-10-01T09:00:00.000Z',
     registrations: [
       {
@@ -33,6 +55,7 @@ const seedEvents = [
         createdAt: '2026-10-03T12:00:00.000Z',
       },
     ],
+    waitlist: [],
   },
   {
     id: 'demo-taller-liderazgo',
@@ -41,6 +64,7 @@ const seedEvents = [
     date: '2026-11-20T10:00',
     location: 'Aula 203 - Pabellón B',
     capacity: 5,
+    status: 'open',
     createdAt: '2026-10-02T09:00:00.000Z',
     registrations: [
       {
@@ -75,7 +99,16 @@ const seedEvents = [
         attendedAt: null,
         createdAt: '2026-10-04T11:30:00.000Z',
       },
+      {
+        id: 'demo-reg-8',
+        studentCode: '20210987',
+        name: 'Carla Mendoza Ríos',
+        attended: false,
+        attendedAt: null,
+        createdAt: '2026-10-04T11:45:00.000Z',
+      },
     ],
+    waitlist: [],
   },
 ];
 
